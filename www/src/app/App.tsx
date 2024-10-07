@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Menu from "./unitsModals/UnitsMenu";
-
+import { convert } from "./utils/converters";
 
 
 const App: React.FC = () => {
@@ -12,6 +12,23 @@ const App: React.FC = () => {
     const [toUnits, setToUnits] = useState<string>("To Units")
     const [openMenuTo, setOpenMenuTo] = useState<boolean>(false)
     const [openMenuFrom, setOpenMenuFrom] = useState<boolean>(false)
+    const [result, setResult] = useState<string>("")
+
+    const openTo = () => {
+        setOpenMenuTo(!openMenuTo)
+        setOpenMenuFrom(false)
+    }
+
+    const openFrom = () => {
+        setOpenMenuFrom(!openMenuFrom)
+        setOpenMenuTo(false)
+    }
+
+    const resultHandler = () => {
+        setResult(convert(fromUnits, toUnits, Number(inpValue))!.toString())
+    }
+
+
     
     return (
         <section className="main">
@@ -20,20 +37,21 @@ const App: React.FC = () => {
                 <p>Enter the temperature, select units and submit</p>
                 <div className="panel">
                     <input className="value" type="text" value={inpValue} onChange={(e) => setInpValue(e.target.value)}/>
-                    <div className="units">
-                        <p onClick={() => setOpenMenuFrom(!openMenuFrom)}>
+                    <div className="units" onClick={openFrom}>
+                        <p>
                             {fromUnits}
-                            {openMenuFrom && <Menu setFromUnits={setFromUnits}/>}
                         </p>
+                        {openMenuFrom && <Menu setFromUnits={setFromUnits}/>}
                     </div>
-                    <div className="units">
-                        <p onClick={() => setOpenMenuTo(!openMenuTo)}>
+                    <div className="units" onClick={openTo}>
+                        <p>
                             {toUnits}
-                            {openMenuTo && <Menu setToUnits={setToUnits}/>}
                         </p>
+                        {openMenuTo && <Menu setToUnits={setToUnits}/>}
                     </div>
-                    <button className="submitBtn">Convert</button>
+                    <button onClick={resultHandler} className="submitBtn">Convert</button>
                 </div>
+                {result && <p className="result">{inpValue} {fromUnits} is {result} {toUnits}</p>}
             </div>
         </section>
     )
