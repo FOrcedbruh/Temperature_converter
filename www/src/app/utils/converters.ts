@@ -35,13 +35,16 @@ export const convert = (from: string, to: string, value: number) => {
     if (from === "Celseus" && to === "Kelvin") {
         return CtoK(value)
     }
-    if (from === "Kevin" && to === "Celseus") {
+    if (from === "Kelvin" && to === "Celseus") {
         return KtoC(value)
     }
-    if (from === "Fehrenheit" && to === "Kelvin") {
+    if (from === "Fahrenheit" && to === "Kelvin") {
         return FtoK(value)
     }
-    if (from === "Kelvin" && to === "Fehrenheit") {
+    if (from === "Kelvin" && to === "Fahrenheit") {
         return KtoF(value)
+    }
+    if (from === to) {
+        return value
     }
 }

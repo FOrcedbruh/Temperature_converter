@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Menu from "./unitsModals/UnitsMenu";
 import { convert } from "./utils/converters";
 
@@ -28,7 +28,9 @@ const App: React.FC = () => {
         setResult(convert(fromUnits, toUnits, Number(inpValue))!.toString())
     }
 
-
+    useEffect(() => {
+        setResult("")
+    }, [inpValue, fromUnits, toUnits])
     
     return (
         <section className="main">
